@@ -1,11 +1,15 @@
 using OpenRA.Traits;
 using UnityEngine;
+using Util;
 
 namespace OpenRA
 {
     public class Mobile : Actor,IPositionable,IFacing
     {
-        private float angle = 45;
+        public float BornFace => 45;
+
+        public float TurnSpeed => 15;
+        
         public void SetPosition(Vector2 pos)
         {
             transform.position = pos;
@@ -13,12 +17,13 @@ namespace OpenRA
 
         public void SetFace(float angle)
         {
-            
+            transform.SetRotateY(angle);
         }
 
         public float GetFace()
         {
-            throw new System.NotImplementedException();
+            return transform.localRotation.eulerAngles.y;
         }
+
     }
 }

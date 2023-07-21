@@ -15,7 +15,6 @@ namespace OpenRA
             private set => currentActivity = value;
         }
 
-
         public void Tick()
         {
             CurrentActivity = ActivityUtils.RunActivity(this, CurrentActivity);

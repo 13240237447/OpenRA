@@ -16,14 +16,26 @@ namespace  OpenRA
         private IPositionable positionable;
 
         private float ticks;
+
+        private IFacing facing;
         
         public Drag(Actor actor,Vector2 start, Vector2 end, float length)
         {
             this.positionable = actor.GetComponent<IPositionable>();
+            facing = actor.GetComponent<IFacing>();
             startPos = start;
             endPos = end;
             this.length = length;
             ticks = 0;
+        }
+
+        protected override void OnFirstRun(Actor self)
+        {
+            base.OnFirstRun(self);
+            if (facing != null)
+            {
+                QueueChild(new Turn(self,facing.BornFace));
+            }
         }
 
         public override bool Tick(Actor self)

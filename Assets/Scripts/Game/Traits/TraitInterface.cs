@@ -55,8 +55,18 @@ namespace OpenRA.Traits
 
     public interface IFacing
     {
+        /// <summary>
+        /// 旋转速度
+        /// </summary>
+        public float TurnSpeed { get; }
+        /// <summary>
+        /// 初始角度
+        /// </summary>
+        public float BornFace { get;}
+        
         public void SetFace(float angle);
 
         public float GetFace();
+        
     }
 }
