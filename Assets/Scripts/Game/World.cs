@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace OpenRA
@@ -11,6 +12,10 @@ namespace OpenRA
         {
             
         }
-        
+
+        private void Update()
+        {
+            TestMobile.Tick();
+        }
     }
 }
