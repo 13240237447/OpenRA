@@ -1,5 +1,6 @@
 using System;
 using OpenRA.Primitives;
+using UnityEngine;
 
 
 namespace OpenRA.Traits
@@ -46,4 +47,16 @@ namespace OpenRA.Traits
         bool EnabledForLocomotor();
     }
 
+
+    public interface IPositionable
+    {
+        void SetPosition(Vector2 pos);
+    }
+
+    public interface IFacing
+    {
+        public void SetFace(float angle);
+
+        public float GetFace();
+    }
 }
