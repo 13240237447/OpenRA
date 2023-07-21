@@ -9,6 +9,7 @@ namespace OpenRA
 
         Activity currentActivity;
         
+
         public Activity CurrentActivity
         {
             get => Activity.SkipDoneActivities(currentActivity);
@@ -24,6 +25,27 @@ namespace OpenRA
         private void OnDestroy()
         {
             CurrentActivity?.OnActorDisposeOuter(this);
+        }
+        
+        public void QueueActivity(bool queued, Activity nextActivity)
+        {
+            if (!queued)
+                CancelActivity();
+
+            QueueActivity(nextActivity);
+        }
+
+        public void QueueActivity(Activity nextActivity)
+        {
+            if (CurrentActivity == null)
+                CurrentActivity = nextActivity;
+            else
+                CurrentActivity.Queue(nextActivity);
+        }
+
+        public void CancelActivity()
+        {
+            CurrentActivity?.Cancel(this);
         }
     }
 }

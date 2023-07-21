@@ -46,8 +46,12 @@ namespace  OpenRA
             {
                 ticks = length;
                 isComplete = true;
+                positionable.SetPosition(endPos);
             }
-            positionable.SetPosition(Vector2.Lerp(startPos,endPos,length - ticks));
+            else
+            {
+                positionable.SetPosition(Vector2.Lerp(startPos,endPos,ticks / length));
+            }
             return isComplete;
         }
     }

@@ -51,6 +51,8 @@ namespace OpenRA.Traits
     public interface IPositionable
     {
         void SetPosition(Vector2 pos);
+
+        Vector2 GetPosition();
     }
 
     public interface IFacing

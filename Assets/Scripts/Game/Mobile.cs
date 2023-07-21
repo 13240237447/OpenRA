@@ -12,7 +12,12 @@ namespace OpenRA
         
         public void SetPosition(Vector2 pos)
         {
-            transform.position = pos;
+            transform.position = new Vector3(pos.x,transform.position.y,pos.y);
+        }
+
+        public Vector2 GetPosition()
+        {
+            return new Vector2(transform.position.x,transform.position.z);
         }
 
         public void SetFace(float angle)
