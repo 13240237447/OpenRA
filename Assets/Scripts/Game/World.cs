@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace OpenRA
 {
@@ -35,8 +36,9 @@ namespace OpenRA
                         {
                             // 这里可以获取射线与地面的交点位置
                             Debug.Log("地面交点位置：" + groundPoint);
-                            TestMobile.QueueActivity(true,
-                                new Drag(TestMobile,TestMobile.GetPosition(),new Vector2(groundPoint.x,groundPoint.z),1));
+                            TestMobile.GetComponent<NavMeshAgent>().destination = groundPoint;
+                            // TestMobile.QueueActivity(true,
+                                // new Drag(TestMobile,TestMobile.GetPosition(),groundPoint,1));
                         }
                     }
                 }

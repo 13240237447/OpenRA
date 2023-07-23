@@ -10,14 +10,14 @@ namespace OpenRA
 
         public float TurnSpeed => 15;
         
-        public void SetPosition(Vector2 pos)
+        public void SetPosition(Vector3 pos)
         {
-            transform.position = new Vector3(pos.x,transform.position.y,pos.y);
+            transform.position = pos;
         }
 
-        public Vector2 GetPosition()
+        public Vector3 GetPosition()
         {
-            return new Vector2(transform.position.x,transform.position.z);
+            return transform.position;
         }
 
         public void SetFace(float angle)

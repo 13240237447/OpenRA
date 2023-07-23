@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using OpenRA.Traits;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace  OpenRA
 {
     public class Drag : Activity
     {
-        private Vector2 startPos;
+        private Vector3 startPos;
 
-        private Vector2 endPos;
+        private Vector3 endPos;
 
         private float length;
 
@@ -18,10 +19,13 @@ namespace  OpenRA
         private float ticks;
 
         private IFacing facing;
+
+        private NavMeshAgent navMeshAgent;
         
-        public Drag(Actor actor,Vector2 start, Vector2 end, float length)
+        public Drag(Actor actor,Vector3 start, Vector3 end, float length)
         {
             this.positionable = actor.GetComponent<IPositionable>();
+            navMeshAgent = actor.GetComponent<NavMeshAgent>();
             facing = actor.GetComponent<IFacing>();
             startPos = start;
             endPos = end;
@@ -40,19 +44,15 @@ namespace  OpenRA
 
         public override bool Tick(Actor self)
         {
-            bool isComplete = false;
-            ticks += Time.deltaTime;
-            if (ticks >= length)
+            if (!navMeshAgent.hasPath)
             {
-                ticks = length;
-                isComplete = true;
-                positionable.SetPosition(endPos);
+                navMeshAgent.destination = endPos;
             }
-            else
+            if (navMeshAgent.isStopped)
             {
-                positionable.SetPosition(Vector2.Lerp(startPos,endPos,ticks / length));
+                return true;
             }
-            return isComplete;
+            return false;
         }
     }
 
