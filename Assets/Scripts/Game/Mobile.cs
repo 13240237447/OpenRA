@@ -1,3 +1,5 @@
+using System;
+using BehaviorDesigner.Runtime;
 using OpenRA.Traits;
 using UnityEngine;
 using Util;
@@ -10,6 +12,15 @@ namespace OpenRA
 
         public float TurnSpeed => 15;
         
+        private BehaviorTree bt;
+        
+        private void Awake()
+        {
+            bt = GetComponent<BehaviorTree>();
+            bt.SetVariable("moveTarget",new SharedVector3());
+            bt.SetVariable("needMove",new SharedBool());
+        }
+
         public void SetPosition(Vector3 pos)
         {
             transform.position = pos;

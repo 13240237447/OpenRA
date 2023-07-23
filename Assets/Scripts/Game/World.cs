@@ -1,6 +1,8 @@
 using System;
+using BehaviorDesigner.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
+using Util;
 
 namespace OpenRA
 {
@@ -10,11 +12,18 @@ namespace OpenRA
     {
         public Mobile TestMobile;
 
+        private BehaviorManager btManager;
+
+        private void Awake()
+        {
+            btManager = gameObject.GetOrAddComponent<BehaviorManager>();
+        }
+
         private void Start()
         {
             if (TestMobile)
             {
-                TestMobile.QueueActivity(new Drag(TestMobile, TestMobile.GetPosition(), TestMobile.GetPosition(), 0));
+                // TestMobile.QueueActivity(new Drag(TestMobile, TestMobile.GetPosition(), TestMobile.GetPosition(), 0));
             }
         }
 
@@ -34,9 +43,13 @@ namespace OpenRA
                         Debug.DrawLine(Camera.main.transform.position,groundPoint,Color.red,1);
                         if (hit.collider.CompareTag("Ground"))
                         {
+                            
                             // 这里可以获取射线与地面的交点位置
                             Debug.Log("地面交点位置：" + groundPoint);
-                            TestMobile.GetComponent<NavMeshAgent>().destination = groundPoint;
+                            BehaviorTree bt = TestMobile.GetComponent<BehaviorTree>();
+                            bt.SetVariableValue("moveTarget",groundPoint);
+                            bt.SetVariableValue("needMove",true);
+                            // TestMobile.GetComponent<NavMeshAgent>().destination = groundPoint;
                             // TestMobile.QueueActivity(true,
                                 // new Drag(TestMobile,TestMobile.GetPosition(),groundPoint,1));
                         }
@@ -47,6 +60,7 @@ namespace OpenRA
 
         private void Update()
         {
+            btManager.Tick();
             Test();
             TestMobile.Tick();
         }
