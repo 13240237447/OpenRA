@@ -25,7 +25,6 @@ namespace Util
         /// </summary>
         private static readonly short clickBgLayerSort = 32767 - 10;
         
-        [RuntimeInitializeOnLoadMethod]
         public static void Init()
         {
             Instance = new GameObject("UI");

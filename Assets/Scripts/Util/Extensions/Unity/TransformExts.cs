@@ -264,9 +264,13 @@ namespace Util
         public static void DestroyAllChilds(this Transform @this)
         {
             var childCount = @this.childCount;
-            for (int i = 0; i < childCount; i++)
+            for (int i = childCount - 1; i >= 0; i--)
             {
+#if UNITY_EDITOR
+                GameObject.DestroyImmediate(@this.GetChild(i).gameObject);
+ #else
                 GameObject.Destroy(@this.GetChild(i).gameObject);
+#endif
             }
         }
         /// <summary>
